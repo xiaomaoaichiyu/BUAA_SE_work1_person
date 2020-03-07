@@ -35,3 +35,7 @@ struct Line {
 public:
 	Line(double a1, double b1, double a2, double b2) { x1 = a1; y1 = b1; x2 = a2; y2 = b2; }
 };
+
+bool getCross(Line l1, Line l2, Point* res);
+
+int getAllintersec(std::vector<Line> lines);
