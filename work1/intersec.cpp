@@ -20,5 +20,16 @@ bool getCross(Line l1, Line l2, Point* res)
 
 int getAllintersec(std::vector<Line> lines)
 {
-	return 0;
+	std::set<Point> points;
+
+	for (int i = 0; i < lines.size() - 1; i++) {
+		for (int j = i + 1; j < lines.size(); j++) {
+			Point p;
+			if (getCross(lines.at(i), lines.at(j), &p)) {
+				points.insert(p);
+			}
+		}
+	}
+
+	return points.size();
 }
