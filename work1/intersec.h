@@ -26,36 +26,38 @@ public:
 		return this->x == p.x && this->y == p.y;
 	}
 	void setPoint(double px, double py) { x = px; y = py; }
+	double getX() { return x; }
+	double getY() { return y; }
 	//vector operation
 	Point operator+(const Point& p) { return Point(x + p.x, y + p.y); }
 	Point operator-(const Point& p) { return Point(x - p.x, y - p.y); }
-	
 	//return norm of [p-(0, 0)]
 	double norm() {
 		return x * x + y * y;
 	}
-	
 	//module of a vector
-	double abs() {
+	double module() {
 		return sqrt(x * x + y * y);
 	}
-
 	//outer product
 	double cross(Point p) {
 		return x * p.y - y * p.x;
 	}
-	
 	//inner product
 	double dot(Point p) {
 		return x * p.x + y * p.y;
 	}
 };
 
-struct Line {
-	double x1, y1;
-	double x2, y2;
+class Line {
+	Point p;
+	Point q;
 public:
-	Line(double a1, double b1, double a2, double b2) { x1 = a1; y1 = b1; x2 = a2; y2 = b2; }
+	Line(double a1, double b1, double a2, double b2) { p.setPoint(a1, b1); q.setPoint(a2, b2); }
+	double getPx() { return p.getX(); }
+	double getPy() { return p.getY(); }
+	double getQx() { return q.getX(); }
+	double getQy() { return q.getY(); }
 };
 
 
@@ -66,7 +68,7 @@ class Circle {
 public:
 	Circle() { x = 0; y = 0; r = 0; }
 	Circle(double cx, double cy, double cr) { x = cx; y = cy; r = cr; }
-	bool IsIntersect(Line l);
+	double IsIntersect(Line l);
 	bool IsIntersect(Circle c);
 	bool getIntersecWithLine(Line l);
 	bool getIntersecWithCircle(Circle c);

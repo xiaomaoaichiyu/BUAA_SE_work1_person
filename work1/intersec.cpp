@@ -2,13 +2,13 @@
 
 bool getCross(Line l1, Line l2, Point* res)
 {
-	double a1 = l1.y1 - l1.y2;
-	double b1 = l1.x2 - l1.x1;
-	double c1 = l1.x1 * l1.y2 - l1.x2 * l1.y1;
+	double a1 = l1.getPy() - l1.getQy();
+	double b1 = l1.getQx() - l1.getPx();
+	double c1 = l1.getPx() * l1.getQy() - l1.getQx() * l1.getPy();
 
-	double a2 = l2.y1 - l2.y2;
-	double b2 = l2.x2 - l2.x1;
-	double c2 = l2.x1 * l2.y2 - l2.x2 * l2.y1;
+	double a2 = l2.getPy() - l2.getQy();
+	double b2 = l2.getQx() - l2.getPx();
+	double c2 = l2.getPx() * l2.getQy() - l2.getQx() * l2.getPy();
 
 	double D = a1 * b2 - a2 * b1;
 	if (D == 0) {
@@ -32,4 +32,25 @@ int getAllintersec(std::vector<Line> lines)
 	}
 
 	return points.size();
+}
+
+// h = outer product / |a|
+double Circle::IsIntersect(Line l)
+{
+	return 0;
+}
+
+bool Circle::IsIntersect(Circle c)
+{
+	return false;
+}
+
+bool Circle::getIntersecWithLine(Line l)
+{
+
+}
+
+bool Circle::getIntersecWithCircle(Circle c)
+{
+
 }
