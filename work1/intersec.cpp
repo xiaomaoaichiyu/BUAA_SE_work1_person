@@ -1,5 +1,23 @@
 #include "../work1/intersec.h"
 
+double cross(Point p, Point q) {
+	return p.getX() * q.getY() - p.getY() * q.getX();
+}
+
+double dot(Point p, Point q) {
+	return p.getX() * q.getX() + p.getY() * q.getY();
+}
+
+bool getCircleLineCross(Circle c, Line l)
+{
+	return false;
+}
+
+bool getCircleCross(Circle c1, Circle c2)
+{
+	return false;
+}
+
 bool getCross(Line l1, Line l2, Point* res)
 {
 	double a1 = l1.getPy() - l1.getQy();
@@ -34,23 +52,8 @@ int getAllintersec(std::vector<Line> lines)
 	return points.size();
 }
 
-// h = outer product / |a|
-double Circle::IsIntersect(Line l)
+double getDistance(Line l, Point p)
 {
-	return 0;
+	return abs(cross(l.getP() - l.getQ(), p)/ (l.getP() - l.getQ()).module());
 }
 
-bool Circle::IsIntersect(Circle c)
-{
-	return false;
-}
-
-bool Circle::getIntersecWithLine(Line l)
-{
-
-}
-
-bool Circle::getIntersecWithCircle(Circle c)
-{
-
-}

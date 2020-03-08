@@ -40,13 +40,6 @@ public:
 		return sqrt(x * x + y * y);
 	}
 	//outer product
-	double cross(Point p) {
-		return x * p.y - y * p.x;
-	}
-	//inner product
-	double dot(Point p) {
-		return x * p.x + y * p.y;
-	}
 };
 
 class Line {
@@ -58,22 +51,26 @@ public:
 	double getPy() { return p.getY(); }
 	double getQx() { return q.getX(); }
 	double getQy() { return q.getY(); }
+	Point getP() { return p; }
+	Point getQ() { return q; }
 };
 
 
 class Circle {
-	double x;
-	double y;
+	Point p;
 	double r;
 public:
-	Circle() { x = 0; y = 0; r = 0; }
-	Circle(double cx, double cy, double cr) { x = cx; y = cy; r = cr; }
-	double IsIntersect(Line l);
-	bool IsIntersect(Circle c);
-	bool getIntersecWithLine(Line l);
-	bool getIntersecWithCircle(Circle c);
+	Circle() { r = 0; }
+	Circle(double cx, double cy, double cr) { p.setPoint(cx, cy); r = cr; }
+	Point getCeter() { return p; }
+	double getR() { return r; }
 };
 
-bool getCross(Line l1, Line l2, Point* res);
 
+double cross(Point p, Point q);
+double dot(Point p, Point q);
+bool getCircleLineCross(Circle c, Line l);
+bool getCircleCross(Circle c1, Circle c2);
+bool getCross(Line l1, Line l2, Point* res);
 int getAllintersec(std::vector<Line> lines);
+double getDistance(Line l, Point p);
