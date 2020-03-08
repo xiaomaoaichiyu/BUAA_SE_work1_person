@@ -29,12 +29,25 @@ public:
 	//vector operation
 	Point operator+(const Point& p) { return Point(x + p.x, y + p.y); }
 	Point operator-(const Point& p) { return Point(x - p.x, y - p.y); }
+	
 	//return norm of [p-(0, 0)]
 	double norm() {
 		return x * x + y * y;
 	}
-	double outerPro(Point p) {
-		return 
+	
+	//module of a vector
+	double abs() {
+		return sqrt(x * x + y * y);
+	}
+
+	//outer product
+	double cross(Point p) {
+		return x * p.y - y * p.x;
+	}
+	
+	//inner product
+	double dot(Point p) {
+		return x * p.x + y * p.y;
 	}
 };
 
