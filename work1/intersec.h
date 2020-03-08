@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <map>
 
 class Point{
 	double x;
@@ -12,8 +13,8 @@ public:
 	Point() { x = 0; y = 0; }
 	Point(double px, double py) { x = px; y = py; }
 	bool operator<(const Point& p) const {
-		if (abs((this->x - p.x)) > 1e-14) {
-			if (abs((this->y - p.y)) > 1e-14) {
+		if (abs((this->x - p.x)) < 1e-14) {
+			if (abs((this->y - p.y)) < 1e-14) {
 				return false;
 			}
 			else {
@@ -80,5 +81,7 @@ bool getCircleCross(Point c1, double r1, Point c2, double r2);
 bool getCross(Line l1, Line l2, Point* res);
 int getAllintersec(std::vector<Line> lines);
 double getDistance(Line l, Point p);
+int lineAndCircleIntersect(std::vector<Line> lines, std::vector<Circle> circles);
+int CirclesIntersect(std::vector<Circle> circles);
 
 using Vector = Point;

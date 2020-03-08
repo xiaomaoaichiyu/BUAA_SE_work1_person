@@ -25,8 +25,10 @@ bool getCircleLineCross(Circle c, Line l)
 	//单位向量
 	Vector e = segment / segment.module();
 	double base = sqrt(R * R - (ceter - foot).norm());
-	Result.insert(foot + e * base);
-	Result.insert(foot - e * base);
+	Point p1 = foot - e * base;
+	Point p2 = foot + e * base;
+	Result.insert(p1);
+	Result.insert(p2);
 	return true;
 }
 
@@ -104,6 +106,7 @@ int getAllintersec(std::vector<Line> lines)
 			Point p;
 			if (getCross(lines.at(i), lines.at(j), &p)) {
 				points.insert(p);
+				Result.insert(p);
 			}
 		}
 	}
@@ -111,8 +114,36 @@ int getAllintersec(std::vector<Line> lines)
 	return points.size();
 }
 
+int lineAndCircleIntersect(std::vector<Line> lines, std::vector<Circle> circles) {
+	int cnt = 0;
+	for (int i = 0; i < lines.size(); i++) {
+		for (int j = 0; j < circles.size(); j++) {
+			if (getCircleLineCross(circles.at(j), lines.at(i))) {
+				cnt++;
+			}
+		}
+	}
+	return cnt;
+}
+
+int CirclesIntersect(std::vector<Circle> circles) {
+	int cnt = 0;
+	for (int i = 0; i < circles.size() - 1; i++) {
+		Point tmpC = circles.at(i).getCeter();
+		double tmpR = circles.at(i).getR();
+		for (int j = i + 1; j < circles.size(); j++) {
+			if (getCircleCross(tmpC, tmpR, circles.at(j).getCeter(), circles.at(j).getR())) {
+				cnt++;
+			}
+		}
+	}
+	return cnt;
+}
+
 double getDistance(Line l, Point p)
 {
-	return abs(cross(l.getP() - l.getQ(), p)/ (l.getP() - l.getQ()).module());
+	double a = (l.getP() - l.getQ()).module();
+	double b = cross(l.getP() - l.getQ(), p - l.getP());
+	return abs(b/a);
 }
 
