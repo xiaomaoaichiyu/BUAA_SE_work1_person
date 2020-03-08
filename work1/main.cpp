@@ -18,16 +18,16 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	ifstream fileIn("input.txt", ios::in);
+	ifstream fileIn(inFileName, ios::in);
 	ofstream fileOut(outFileName, ios::out);
 
 	if (!fileIn) {
-		throw "input file open Error!!";
+		cerr << "input file open Error!!" << endl;
 		return 0;
 	}
 
 	if (!fileOut) {
-		throw "output file open Error!!";
+		cerr << "output file open Error!!" << endl;
 		return 0;
 	}
 
@@ -50,19 +50,23 @@ int main(int argc, char** argv) {
 			circles.push_back(c);
 		}
 	}
-
-	int cnt1 = 0, cnt2 = 0;
+	fileIn.close();
+	int cnt1 = 0, cnt2 = 0, cnt3 = 0;
 	//get the intersection num of all lines
-	getAllintersec(lines);
+	cnt1 = getAllintersec(lines);
 	if (circles.size() != 0) {
-		cnt1 = lineAndCircleIntersect(lines, circles);
-		cnt2 = CirclesIntersect(circles);
+		cnt2 = lineAndCircleIntersect(lines, circles);
+		cnt3 = CirclesIntersect(circles);
 	}
 
+
+	std::sort(Result.begin(), Result.end());
+	auto last = std::unique(Result.begin(), Result.end());
+	Result.erase(last, Result.end());
 	int res = Result.size();
 	if (fileOut) {
 		fileOut << res;
 	}
-	//cout << res << " "<< cnt1 <<" "<<cnt2 << endl;
+	cout << res << " "<< cnt1 <<" "<<cnt2 << " " << cnt3 << endl;
 	return 0;
 }

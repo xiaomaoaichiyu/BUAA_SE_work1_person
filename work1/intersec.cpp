@@ -1,6 +1,20 @@
 #include "../work1/intersec.h"
 
-std::set<Point> Result;
+std::vector<Point> Result;
+
+void addPoint(Point p) {
+	if (Result.size() > MAX_POINT) {
+		std::sort(Result.begin(), Result.end());
+		auto last = std::unique(Result.begin(), Result.end());
+		Result.erase(last, Result.end());
+		if (Result.size() > MAX_POINT) {
+			exit(1);
+		}
+	}
+	else {
+		Result.push_back(p);
+	}
+}
 
 double cross(Point p, Point q) {
 	return p.getX() * q.getY() - p.getY() * q.getX();
@@ -27,20 +41,22 @@ bool getCircleLineCross(Circle c, Line l)
 	double base = sqrt(R * R - (ceter - foot).norm());
 	Point p1 = foot - e * base;
 	Point p2 = foot + e * base;
-	Result.insert(p1);
-	Result.insert(p2);
+	addPoint(p1);
+	addPoint(p2);
 	return true;
 }
 
 bool getCircleCross(Point c1, double r1, Point c2, double r2)
 {
-	double flag = (c1 - c2).norm() - (r1 + r2) * (r1 + r2);
-	if (flag > 0) {
+	double x1 = sqrt((c1 - c2).norm());
+	double b1 = abs(r1 - r2);
+	double b2 = abs(r1 + r2);
+	if (x1 < b1 || x1 > b2) {
 		return false;
 	}
-	else if (flag == 0) {
+	else if (x1 == b1 || x1 == b2) {
 		Vector e = (c2 - c1) / (c2 - c1).module();
-		Result.insert(c1 + e * r1);
+		addPoint(c1 + e * r1);
 		return true;
 	}
 	else {
@@ -53,14 +69,14 @@ bool getCircleCross(Point c1, double r1, Point c2, double r2)
 		if (c1.getX() == c2.getX()) {
 			Point left(E.getX() - CE, E.getY());
 			Point right(E.getX() + CE, E.getY());
-			Result.insert(left);
-			Result.insert(right);
+			addPoint(left);
+			addPoint(right);
 		}
 		else if (c1.getY() == c2.getY()) {
 			Point up(E.getX(), E.getY() - CE);
 			Point down(E.getX(), E.getY() + CE);
-			Result.insert(up);
-			Result.insert(down);
+			addPoint(up);
+			addPoint(down);
 		}
 		else {
 			double k1 = (c2.getY() - c1.getY()) / (c2.getX() - c1.getX());
@@ -71,9 +87,9 @@ bool getCircleCross(Point c1, double r1, Point c2, double r2)
 			double dx = E.getX() + EF;
 			double dy = E.getY() + k2 * (dx - E.getX());
 			Point tmp(cx, cy);
-			Result.insert(tmp);
+			addPoint(tmp);
 			tmp.setPoint(dx, dy);
-			Result.insert(tmp);
+			addPoint(tmp);
 		}
 	}
 	return true;
@@ -99,19 +115,19 @@ bool getCross(Line l1, Line l2, Point* res)
 
 int getAllintersec(std::vector<Line> lines)
 {
-	std::set<Point> points;
-
-	for (int i = 0; i < lines.size() - 1; i++) {
+	int cnt = 0;
+	int bound1 = lines.size() - 1;
+	for (int i = 0; i < bound1; i++) {
 		for (int j = i + 1; j < lines.size(); j++) {
 			Point p;
 			if (getCross(lines.at(i), lines.at(j), &p)) {
-				points.insert(p);
-				Result.insert(p);
+				cnt++;
+				addPoint(p);
 			}
 		}
 	}
 
-	return points.size();
+	return cnt;
 }
 
 int lineAndCircleIntersect(std::vector<Line> lines, std::vector<Circle> circles) {
@@ -128,7 +144,8 @@ int lineAndCircleIntersect(std::vector<Line> lines, std::vector<Circle> circles)
 
 int CirclesIntersect(std::vector<Circle> circles) {
 	int cnt = 0;
-	for (int i = 0; i < circles.size() - 1; i++) {
+	int bound1 = circles.size() - 1;
+	for (int i = 0; i < bound1; i++) {
 		Point tmpC = circles.at(i).getCeter();
 		double tmpR = circles.at(i).getR();
 		for (int j = i + 1; j < circles.size(); j++) {

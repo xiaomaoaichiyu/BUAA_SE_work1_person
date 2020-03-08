@@ -5,6 +5,9 @@
 #include <vector>
 #include <iostream>
 #include <map>
+#include <algorithm>
+
+const int MAX_POINT = 5000000;
 
 class Point{
 	double x;
@@ -72,7 +75,9 @@ public:
 };
 
 
-extern std::set<Point> Result;
+extern std::vector<Point> Result;
+
+void addPoint(Point p);
 
 double cross(Point p, Point q);
 double dot(Point p, Point q);
@@ -83,5 +88,6 @@ int getAllintersec(std::vector<Line> lines);
 double getDistance(Line l, Point p);
 int lineAndCircleIntersect(std::vector<Line> lines, std::vector<Circle> circles);
 int CirclesIntersect(std::vector<Circle> circles);
+
 
 using Vector = Point;
