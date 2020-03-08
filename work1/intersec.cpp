@@ -1,5 +1,7 @@
 #include "../work1/intersec.h"
 
+std::set<Point> Result;
+
 double cross(Point p, Point q) {
 	return p.getX() * q.getY() - p.getY() * q.getX();
 }
@@ -10,7 +12,22 @@ double dot(Point p, Point q) {
 
 bool getCircleLineCross(Circle c, Line l)
 {
-	return false;
+	Point ceter = c.getCeter();
+	double R = c.getR();
+	if (getDistance(l, ceter) > R) {
+		return false;
+	}
+
+	//求垂足的坐标
+	Vector segment = l.getQ() - l.getP();
+	double ratio = dot(ceter - l.getP(), segment) / segment.norm();
+	Point foot = l.getP() + segment * ratio;
+	//单位向量
+	Vector e = segment / segment.module();
+	double base = sqrt(R * R - (ceter - foot).norm());
+	Result.insert(foot + e * base);
+	Result.insert(foot - e * base);
+	return true;
 }
 
 bool getCircleCross(Circle c1, Circle c2)

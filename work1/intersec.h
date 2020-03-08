@@ -5,6 +5,8 @@
 #include <vector>
 #include <iostream>
 
+
+
 class Point{
 	double x;
 	double y;
@@ -31,6 +33,8 @@ public:
 	//vector operation
 	Point operator+(const Point& p) { return Point(x + p.x, y + p.y); }
 	Point operator-(const Point& p) { return Point(x - p.x, y - p.y); }
+	Point operator*(const double r) { return Point(x * r, y * r); }
+	Point operator/(const double r) { return Point(x / r, y / r); }
 	//return norm of [p-(0, 0)]
 	double norm() {
 		return x * x + y * y;
@@ -67,6 +71,8 @@ public:
 };
 
 
+extern std::set<Point> Result;
+
 double cross(Point p, Point q);
 double dot(Point p, Point q);
 bool getCircleLineCross(Circle c, Line l);
@@ -74,3 +80,5 @@ bool getCircleCross(Circle c1, Circle c2);
 bool getCross(Line l1, Line l2, Point* res);
 int getAllintersec(std::vector<Line> lines);
 double getDistance(Line l, Point p);
+
+using Vector = Point;

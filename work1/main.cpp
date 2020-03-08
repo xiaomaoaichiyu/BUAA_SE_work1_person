@@ -3,6 +3,10 @@
 using namespace std;
 
 int main(int argc, char** argv) {
+	Circle c(1, 0, 2);
+	Line l(-1, 4, 4, -1);
+	int res1 = getCircleLineCross(c, l);
+
 	string inFileName = "";
 	string outFileName = "";
 	for (int i = 1; i < argc; i++) {
@@ -13,7 +17,6 @@ int main(int argc, char** argv) {
 			outFileName = argv[4];
 		}
 	}
-
 
 	ifstream fileIn("input.txt", ios::in);
 	ofstream fileOut(outFileName, ios::out);
