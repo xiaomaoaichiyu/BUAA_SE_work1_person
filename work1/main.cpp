@@ -3,9 +3,9 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-	Circle c(1, 0, 2);
-	Line l(-1, 4, 4, -1);
-	int res1 = getCircleLineCross(c, l);
+	Circle c1(1, 0, 2);
+	Circle c2(2, 2, 1);
+	int res1 = getCircleCross(c1.getCeter(), c1.getR(), c2.getCeter(), c2.getR());
 
 	string inFileName = "";
 	string outFileName = "";

@@ -30,9 +30,51 @@ bool getCircleLineCross(Circle c, Line l)
 	return true;
 }
 
-bool getCircleCross(Circle c1, Circle c2)
+bool getCircleCross(Point c1, double r1, Point c2, double r2)
 {
-	return false;
+	double flag = (c1 - c2).norm() - (r1 + r2) * (r1 + r2);
+	if (flag > 0) {
+		return false;
+	}
+	else if (flag == 0) {
+		Vector e = (c2 - c1) / (c2 - c1).module();
+		Result.insert(c1 + e * r1);
+		return true;
+	}
+	else {
+		Vector AB = (c2 - c1);
+		double l = AB.module();
+		Vector e = AB / l;
+		double AE = (r1 * r1 - r2 * r2 + l * l) / (2 * l);
+		Point E = c1 + AB * AE / l;
+		double CE = sqrt(r1 * r1 - AE * AE);
+		if (c1.getX() == c2.getX()) {
+			Point left(E.getX() - CE, E.getY());
+			Point right(E.getX() + CE, E.getY());
+			Result.insert(left);
+			Result.insert(right);
+		}
+		else if (c1.getY() == c2.getY()) {
+			Point up(E.getX(), E.getY() - CE);
+			Point down(E.getX(), E.getY() + CE);
+			Result.insert(up);
+			Result.insert(down);
+		}
+		else {
+			double k1 = (c2.getY() - c1.getY()) / (c2.getX() - c1.getX());
+			double k2 = -1 / k1;
+			double EF = sqrt(CE * CE / (1 + k2 * k2));
+			double cx = E.getX() - EF;
+			double cy = E.getY() + k2 * (cx - E.getX());
+			double dx = E.getX() + EF;
+			double dy = E.getY() + k2 * (dx - E.getX());
+			Point tmp(cx, cy);
+			Result.insert(tmp);
+			tmp.setPoint(dx, dy);
+			Result.insert(tmp);
+		}
+	}
+	return true;
 }
 
 bool getCross(Line l1, Line l2, Point* res)

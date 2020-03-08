@@ -5,8 +5,6 @@
 #include <vector>
 #include <iostream>
 
-
-
 class Point{
 	double x;
 	double y;
@@ -14,14 +12,16 @@ public:
 	Point() { x = 0; y = 0; }
 	Point(double px, double py) { x = px; y = py; }
 	bool operator<(const Point& p) const {
-		if (this->x < p.x) {
-			return true;
-		}
-		else if (this->x == p.x) {
-			return this->y < p.y;
+		if (abs((this->x - p.x)) > 1e-14) {
+			if (abs((this->y - p.y)) > 1e-14) {
+				return false;
+			}
+			else {
+				return this->y < p.y;
+			}
 		}
 		else {
-			return false;
+			return this->x < p.x;
 		}
 	}
 	bool operator==(const Point& p) const {
@@ -76,7 +76,7 @@ extern std::set<Point> Result;
 double cross(Point p, Point q);
 double dot(Point p, Point q);
 bool getCircleLineCross(Circle c, Line l);
-bool getCircleCross(Circle c1, Circle c2);
+bool getCircleCross(Point c1, double r1, Point c2, double r2);
 bool getCross(Line l1, Line l2, Point* res);
 int getAllintersec(std::vector<Line> lines);
 double getDistance(Line l, Point p);
