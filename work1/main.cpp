@@ -3,9 +3,6 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-	/*Circle c1(1, 0, 2);
-	Circle c2(2, 2, 1);
-	int res1 = getCircleCross(c1.getCeter(), c1.getR(), c2.getCeter(), c2.getR());*/
 
 	string inFileName = "";
 	string outFileName = "";
@@ -67,6 +64,6 @@ int main(int argc, char** argv) {
 	if (fileOut) {
 		fileOut << res;
 	}
-	cout << res << " "<< cnt1 <<" "<<cnt2 << " " << cnt3 << endl;
+	//cout << res << endl;
 	return 0;
 }

@@ -8,6 +8,7 @@
 #include <algorithm>
 
 const int MAX_POINT = 5000000;
+const double PRECISION = 1e-10;
 
 class Point{
 	double x;
@@ -16,8 +17,8 @@ public:
 	Point() { x = 0; y = 0; }
 	Point(double px, double py) { x = px; y = py; }
 	bool operator<(const Point& p) const {
-		if (abs((this->x - p.x)) < 1e-14) {
-			if (abs((this->y - p.y)) < 1e-14) {
+		if (abs((this->x - p.x)) < PRECISION) {
+			if (abs((this->y - p.y)) < PRECISION) {
 				return false;
 			}
 			else {
@@ -29,7 +30,13 @@ public:
 		}
 	}
 	bool operator==(const Point& p) const {
-		return this->x == p.x && this->y == p.y;
+		if (abs(this->x - p.x) < PRECISION && abs(this->y - p.y) < PRECISION) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		//return this->x - p.x && this->y == p.y;
 	}
 	void setPoint(double px, double py) { x = px; y = py; }
 	double getX() { return x; }
@@ -76,7 +83,6 @@ public:
 
 
 extern std::vector<Point> Result;
-
 void addPoint(Point p);
 
 double cross(Point p, Point q);
